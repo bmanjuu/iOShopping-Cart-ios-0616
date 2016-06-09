@@ -54,38 +54,78 @@
 }
 
 
-
 -(void)sortItemsByNameAsc{
+    
+    NSSortDescriptor *sortShoppingItemsByNameAsc = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    
+    NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
+   
+    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    
     //returns nothing
 }
 
 
 
 -(void)sortItemsByNameDesc{
+    
+    NSSortDescriptor *sortShoppingItemsByNameAsc = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    
+    NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
+    
+    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    
     //returns nothing
 }
 
 
 
 -(void)sortItemsByPriceInCentsAsc{
+    
+    NSSortDescriptor *sortShoppingItemsByNameAsc = [[NSSortDescriptor alloc] initWithKey:@"priceInCents" ascending:YES];
+    
+    NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
+    
+    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    
     //returns nothing;
 }
 
 
 
 -(void)sortItemsByPriceInCentsDesc{
+    
+    NSSortDescriptor *sortShoppingItemsByNameAsc = [[NSSortDescriptor alloc] initWithKey:@"priceInCents" ascending:NO];
+    
+    NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
+    
+    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    
     //returns nothing;
 }
 
 
 
 -(NSArray *)allItemsWithName:(NSString *)name{
-    return @[];
+    
+    NSMutableArray *cartItemsWithName = [[NSMutableArray alloc] init];
+    
+    for(NSString *item in self.items){
+        if([item isEqualToString:name]){
+            [cartItemsWithName addObject:item];
+        }
+    }
+    
+    return cartItemsWithName;
 }
 
 
 
 -(NSArray *)allItemsWithMinimumPriceInCents:(NSUInteger)price{
+    
+//    NSPredicate *getCartItemsWithName = [NSPredicate predicateWithFormat:price];
+//    NSArray *cartItemsWithName = [self.items filteredArrayUsingPredicate:getCartItemsWithName];
+    
     return @[];
 }
 
