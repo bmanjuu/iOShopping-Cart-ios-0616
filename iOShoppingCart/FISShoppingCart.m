@@ -124,8 +124,8 @@
 
 
 -(NSArray *)allItemsWithMinimumPriceInCents:(NSUInteger)price{
-
-    NSPredicate *itemsWithLowestPrice = [NSPredicate predicateWithFormat:@"price == %lu", price];
+    
+    NSPredicate *itemsWithLowestPrice = [NSPredicate predicateWithFormat:@"self.priceInCents >= %lu", price];
     NSArray *cartItemsWithLowestPrice = [self.items filteredArrayUsingPredicate:itemsWithLowestPrice];
     
     return cartItemsWithLowestPrice;
@@ -134,7 +134,11 @@
 
 
 -(NSArray *)allItemsWithMaximumPriceInCents:(NSUInteger)price{
-    return @[]; 
+    
+    NSPredicate *itemsWithHighestPrice = [NSPredicate predicateWithFormat:@"self.priceInCents <= %lu", price];
+    NSArray *cartItemsWithHighestPrice = [self.items filteredArrayUsingPredicate:itemsWithHighestPrice];
+    
+    return cartItemsWithHighestPrice;
 }
 
 @end
