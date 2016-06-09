@@ -12,12 +12,13 @@
 
 -(NSUInteger)calculateTotalPriceInCents{
     
-    self.items = [[NSMutableArray alloc] init]; //this needs to be initialized here... tried doing it in addItem method but got errors of unrecognized selector sent to instance blahblahblah. need to ask why! :)
+     // self.items = [[NSMutableArray alloc] init]; //this needs to be initialized here... tried doing it in addItem method but got errors of unrecognized selector sent to instance blahblahblah. need to ask why! :)
+    // DO NOT NEED TO INITIALIZE THIS SELF.ITEMS... unnecessary... :( -party parrot shuffle-
     
     NSUInteger totalPriceInCents = 0;
     
-    for(NSNumber *priceOfItem in self.items){
-        totalPriceInCents += [priceOfItem integerValue];
+    for(FISItem *priceOfItem in self.items){
+        totalPriceInCents += priceOfItem.priceInCents;
     }
     
     return totalPriceInCents;
@@ -60,7 +61,7 @@
     
     NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
    
-    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    self.items = [[self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor] mutableCopy];
     
     //returns nothing
 }
@@ -73,7 +74,7 @@
     
     NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
     
-    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    self.items = [[self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor] mutableCopy];
     
     //returns nothing
 }
@@ -86,7 +87,7 @@
     
     NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
     
-    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    self.items = [[self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor] mutableCopy];
     
     //returns nothing;
 }
@@ -99,7 +100,7 @@
     
     NSArray *sortShoppingCartDescriptor = [NSArray arrayWithObject:sortShoppingItemsByNameAsc];
     
-    self.items = [self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor];
+    self.items = [[self.items sortedArrayUsingDescriptors:sortShoppingCartDescriptor] mutableCopy];
     
     //returns nothing;
 }
@@ -110,9 +111,10 @@
     
     NSMutableArray *cartItemsWithName = [[NSMutableArray alloc] init];
     
-    for(NSString *item in self.items){
-        if([item isEqualToString:name]){
-            [cartItemsWithName addObject:item];
+    for(FISItem *cartItems in self.items){
+        if([cartItems.name isEqualToString: name]){
+            [cartItemsWithName addObject:cartItems];
+            //need cartItems, not cartItems.name ASK WHY 
         }
     }
     
@@ -122,11 +124,11 @@
 
 
 -(NSArray *)allItemsWithMinimumPriceInCents:(NSUInteger)price{
+
+    NSPredicate *itemsWithLowestPrice = [NSPredicate predicateWithFormat:@"price == %lu", price];
+    NSArray *cartItemsWithLowestPrice = [self.items filteredArrayUsingPredicate:itemsWithLowestPrice];
     
-//    NSPredicate *getCartItemsWithName = [NSPredicate predicateWithFormat:price];
-//    NSArray *cartItemsWithName = [self.items filteredArrayUsingPredicate:getCartItemsWithName];
-    
-    return @[];
+    return cartItemsWithLowestPrice;
 }
 
 
