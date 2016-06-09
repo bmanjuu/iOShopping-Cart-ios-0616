@@ -12,11 +12,12 @@
 
 -(NSUInteger)calculateTotalPriceInCents{
     
-     // self.items = [[NSMutableArray alloc] init]; //this needs to be initialized here... tried doing it in addItem method but got errors of unrecognized selector sent to instance blahblahblah. need to ask why! :)
-    // DO NOT NEED TO INITIALIZE THIS SELF.ITEMS... unnecessary... :( -party parrot shuffle-
+     // self.items = [[NSMutableArray alloc] init]; // self.items does not need to be initialized
     
     NSUInteger totalPriceInCents = 0;
     
+    
+    // create a new FISItem so you can access the property when you go through the loop
     for(FISItem *priceOfItem in self.items){
         totalPriceInCents += priceOfItem.priceInCents;
     }
@@ -114,7 +115,7 @@
     for(FISItem *cartItems in self.items){
         if([cartItems.name isEqualToString: name]){
             [cartItemsWithName addObject:cartItems];
-            //need cartItems, not cartItems.name ASK WHY 
+            //need cartItems, not cartItems.name, need to look into this for further clarification  
         }
     }
     
